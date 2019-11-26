@@ -1,7 +1,7 @@
 class HashTable_probe(object):
 
     def __init__(self):
-        self.max_length = 8
+        self.max_length = 10
         self.max_load_factor = 0.75
         self.length = 0
         self.table = [None] * self.max_length
@@ -19,8 +19,9 @@ class HashTable_probe(object):
             hashed_key = self._increment_key(hashed_key)
         tuple = (key, value)
         self.table[hashed_key] = tuple
-        if self.length / float(self.max_length) >= self.max_load_factor:
-            self._resize()
+
+#        if self.length / float(self.max_length) >= self.max_load_factor:
+#            self._resize()
 
     def __getitem__(self, key):
         index = self._find_item(key)
@@ -69,7 +70,7 @@ class HashTable_probe(object):
 class HashTable_prob_var(object):
 
     def __init__(self):
-        self.max_length = 8
+        self.max_length = 10
         self.max_load_factor = 0.75
         self.length = 0
         self.table = [None] * self.max_length
@@ -100,8 +101,8 @@ class HashTable_prob_var(object):
             
         tuple = (key, value, True)
         self.table[hashed_key] = tuple
-        if self.length / float(self.max_length) >= self.max_load_factor:
-            self._resize()
+#        if self.length / float(self.max_length) >= self.max_load_factor:
+#            self._resize()
 
     def __getitem__(self, key):
         index = self._find_item(key)
@@ -112,10 +113,10 @@ class HashTable_prob_var(object):
         self.table[index] = None
 
     def _hash(self, key):
-        return key % self.max_length
+#        return key % self.max_length
 
-        # TODO more robust
-        # return hash(key) % self.max_length
+
+        return hash(key) % self.max_length
 
     def _increment_key(self, key, flag):
 
@@ -150,4 +151,35 @@ class HashTable_prob_var(object):
         for tuple in old_table:
             if tuple is not None:
                 self[tuple[0]] = tuple[1]
+
+def randomList(n):
+    randomlist = []
+    for x in range(1, n+1, 1):
+        randomlist.append(random.randint(1,10000))
+        
+    return randomlist
+
+def worstList(n):
+    randomlist = []
+    for x in range(1, n+1, 1):
+        randomlist.append(random.randint(1,10000))
+        
+    return randomlist
+
+# Testerna
+
+
+test_prob = HashTable_probe()
+test_var = HashTable_prob_var()
+
+
+for x in range(0, 8+1, 1):
+    test_prob[x] = x
+
+
+for x in range(0, 4+1, 1):
+    test_var[x] = x
+
+
+
 
