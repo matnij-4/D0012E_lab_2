@@ -1,9 +1,10 @@
+import random
 import time
 
 class HashTable_probe(object):
 
     def __init__(self):
-        self.max_length = 25000
+        self.max_length = 20
         self.max_load_factor = 0.75
         self.length = 0
         self.table = [None] * self.max_length
@@ -95,7 +96,7 @@ class HashTable_probe(object):
 class HashTable_prob_var(object):
 
     def __init__(self):
-        self.max_length = 25000
+        self.max_length = 20
         self.max_load_factor = 0.75
         self.length = 0
         self.table = [None] * self.max_length
@@ -209,15 +210,17 @@ def worstList(n):
 test_prob = HashTable_probe()
 test_var = HashTable_prob_var()
 
+randomKeys = randomList(1000000)
+
 timestp = time.time()
-for x in range(0, 12500, 1):
-    test_prob[25000*x] = x
+for x in range(0, 10, 1):
+    test_var[randomKeys[x]] = x
 print(time.time() - timestp)
 
 
 timestp = time.time()
-for x in range(0, 12500, 1):
-    test_var[25000*x] = x
+for x in range(0, 10, 1):
+    test_prob[randomKeys[x]] = x
 print(time.time() - timestp)
 
 
