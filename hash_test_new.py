@@ -94,28 +94,36 @@ class HashTable_prob_var(object):
 
     def __setitem__(self, key, value):
 
-        
-        self.length += 1
         hashed_key = self._hash(key)
-        if self.table[hashed_key] == None:
-            flag = True
-        else:
+        if self.table[hashed_key] is not None:
             self.collNum = self.collNum + 1
-            flag = self.table[hashed_key][2]
-            self.table[hashed_key] = (self.table[hashed_key][0], self.table[hashed_key][1], not flag)
 
+            
+            if self.table[hashed_key][3] >= self.table[hashed_key][2]:
+                # [2] is down
+                self.table[hashed_key] = (self.table[hashed_key][0], self.table[hashed_key][1],self.table[hashed_key][2] +1, self.table[hashed_key][3])
+                while self.table[hashed_key] is not None:
+                    self.collJump = self.collJump + 1
+                    self.cCount = self.cCount + 1
+                    if self.table[hashed_key][0] == key:
+                        self.length -= 1
+                        break
+                    hashed_key = self._increment_key_down(hashed_key)
 
-        while self.table[hashed_key] is not None:
-            self.collJump = self.collJump + 1
-            self.cCount = self.cCount + 1
-            if self.table[hashed_key][0] == key:
-                self.length -= 1
-                break
-            hashed_key = self._increment_key(hashed_key, flag)
+                    
+            else:
+                self.table[hashed_key] = (self.table[hashed_key][0], self.table[hashed_key][1],self.table[hashed_key][2], self.table[hashed_key][3]+1)
+                while self.table[hashed_key] is not None:
+                    self.collJump = self.collJump + 1
+                    self.cCount = self.cCount + 1
+                    if self.table[hashed_key][0] == key:
+                        self.length -= 1
+                        break
+                    hashed_key = self._increment_key_up(hashed_key)
 
 
         
-        tuple = (key, value, True)
+        tuple = (key, value, 0, 0)
         self.table[hashed_key] = tuple
 
     def __getitem__(self, key):
@@ -132,13 +140,17 @@ class HashTable_prob_var(object):
 
         return key % self.max_length
 
-    def _increment_key(self, key, flag):
 
-        if flag:
-            return (key + 1) % self.max_length
+
+    def _increment_key_up(self, key):
+        return (key - 1) % self.max_length
+
         
-        else:
-            return (key - 1) % self.max_length
+    def _increment_key_down(self, key):
+            return (key + 1) % self.max_length
+
+
+
 
     def __str__(self):
         return str(self.table)
@@ -173,10 +185,10 @@ def randomList(n):
         
     return randomlist
 
-def worstList(n):
+def worstList(n, mod):
     randomlist = []
     for x in range(1, n+1, 1):
-        randomlist.append(random.randint(1,5001))
+        randomlist.append(x * mod)
         
     return randomlist
 
@@ -189,13 +201,13 @@ def shufflist(n):
 
 
 
-
 # Testerna
 
 randomKeys = shufflist(1000000)
+worstKeys = worstList(100000, 
 
-test_prob = HashTable_probe(200000)
-test_var = HashTable_prob_var(200000)
+test_prob = HashTable_probe(15000)
+test_var = HashTable_prob_var(15000)
 
 
 timestp = time.time()
