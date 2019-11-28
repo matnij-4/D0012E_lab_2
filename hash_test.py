@@ -18,8 +18,6 @@ class HashTable_probe(object):
         hashed_key = self._hash(key)
 
 
-
-        
         while self.table[hashed_key] is not None:
             flagCol = True
             if self.table[hashed_key][0] == key:
@@ -67,19 +65,6 @@ class HashTable_probe(object):
                 if hashed_key == original_key:
                     raise KeyError
         return hashed_key
-
-    def _resize(self):
-        self.max_length *= 2
-        self.length = 0
-        old_table = self.table
-        self.table = [None] * self.max_length
-        for tuple in old_table:
-            if tuple is not None:
-                self[tuple[0]] = tuple[1]
-
-
-
-
 
 
 
@@ -168,14 +153,6 @@ class HashTable_prob_var(object):
                     raise KeyError
         return hashed_key
 
-    def _resize(self):
-        self.max_length *= 2
-        self.length = 0
-        old_table = self.table
-        self.table = [None] * self.max_length
-        for tuple in old_table:
-            if tuple is not None:
-                self[tuple[0]] = tuple[1]
 
 
 
