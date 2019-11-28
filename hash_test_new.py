@@ -204,10 +204,10 @@ def shufflist(n):
 # Testerna
 
 randomKeys = shufflist(1000000)
-worstKeys = worstList(100000, 
+worstKeys = worstList(100000, 25000)
 
-test_prob = HashTable_probe(15000)
-test_var = HashTable_prob_var(15000)
+test_prob = HashTable_probe(235000)
+test_var = HashTable_prob_var(235000)
 
 
 timestp = time.time()
