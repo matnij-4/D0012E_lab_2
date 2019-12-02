@@ -50,9 +50,11 @@ class HashTable_probe(object):
         self.table[index] = None
 
     def _hash(self, key):
-        return (((random.randint(1,10000) * key + random.randint(1,10000)) % 420691 ) % self.max_length)
-        
-        return key % self.max_length
+        return (((666666 * key + 8645912) % 420691 ) % self.max_length)
+
+#       return key % (int(self.max_length / 2)) 
+#        
+#        return key % self.max_length
     
 
     def _increment_key(self, key):
@@ -148,8 +150,8 @@ class HashTable_prob_var(object):
 
     def _hash(self, key):
 #        return key % self.max_length
-                                                                            #Best Prime
-        return (((random.randint(1,10000) * key + random.randint(1,10000)) % 420691 ) % self.max_length)
+#        return key % (int(self.max_length / 2))                                           #Best Prime
+        return (((666666 * key + 8645912) % 420691 ) % self.max_length)
 #        return key % self.max_length
 
 
